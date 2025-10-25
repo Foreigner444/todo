@@ -28,23 +28,23 @@
       .form-control {
         padding: 1.375rem 0.75rem !important;
       }
-      
+
       .tasks-container {
         height: 450px;
         overflow-y: auto;
       }
-      
+
       .task-card {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-      
+
       .task-actions {
         display: flex;
         gap: 5px;
       }
-      
+
       .task-actions .btn {
         padding: 0.375rem 0.75rem;
         font-size: 0.875rem;
@@ -54,12 +54,12 @@
   <body>
     <div class="container pt-5">
       <h3 class="text-center mb-4">Django ToDo App</h3>
-      
+
       <div class="row mb-4">
         <div class="col-md-7 col-lg-7">
           <h4>My Day</h4>
           <p class="text-muted">{% now "jS F Y" %}</p>
-          
+
           <div class="tasks-container">
             <!-- List of all the tasks for the day -->
             {% for task in tasks %}
@@ -67,7 +67,7 @@
               <div class="card-body task-card">
                 <span>{{ task.title }}</span>
                 <div class="task-actions">
-                  <a class="btn btn-success btn-sm" title="Mark as Done">
+                  <a href={% url 'mark_as_done' task.pk %} class="btn btn-success btn-sm" title="Mark as Done">
                     <i class="fa fa-check"></i>
                   </a>
                   <a class="btn btn-primary btn-sm" title="Edit">
@@ -82,18 +82,24 @@
             {% endfor %}
           </div>
         </div>
-        
+
         <div class="col-md-5 col-lg-5">
           <h4>Completed Tasks</h4>
           <div class="tasks-container">
             <!-- List of all the tasks that have completed -->
+            {% for task in completed_tasks %}
+            <div class="card m-1">
+              <div class="card-body">{{ task.title }}</div>
+            </div>
+            {% empty %}
             <div class="card m-1">
               <div class="card-body">This is the completed task.</div>
             </div>
+            {% endfor %}
           </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col-md-7 col-lg-7">
           <!-- To Do Form -->
